@@ -9,17 +9,18 @@ public class FRCRobot {
 	enum Task {MovingForward20m, TurningLeft90deg};
 	Task curTask;
 	Task tasks [] = {Task.MovingForward20m,
-					  Task.TurningLeft90deg,
-					  Task.MovingForward20m,
-					  Task.TurningLeft90deg,
-					  Task.MovingForward20m,
-					  Task.TurningLeft90deg,
-					  Task.MovingForward20m};
+					 Task.TurningLeft90deg,
+					 Task.MovingForward20m,
+					 Task.TurningLeft90deg,
+					 Task.MovingForward20m,
+					 Task.TurningLeft90deg,
+					 Task.MovingForward20m};
 	int taskNum;
 	
 	public FRCRobot(Robot wpilibrobot)
 	{
 		this.wpilibrobot = wpilibrobot;
+		driveSys = new DriveSystem(this);
 	}
 	
 	public void runTeleOp()
@@ -32,7 +33,7 @@ public class FRCRobot {
 	{
 		//Start with first task
 		curTask = tasks[0];
-		taskNum = 1;
+		taskNum = 0;
 	}
 	
 	public void runAutonomous()
