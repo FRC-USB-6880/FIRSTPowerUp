@@ -17,9 +17,10 @@ public class TaskTurnLeft90deg implements RobotTask {
 	
 	public boolean runTask()
 	{
-		//If 
-		if (true)
+		//If turned 90 deg
+		if (robot.driveSys.getDist() >= 20)
 		{
+			//Tell robot to go to next task
 			return true;
 		}
 		return false;

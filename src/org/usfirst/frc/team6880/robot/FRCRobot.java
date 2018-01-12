@@ -38,7 +38,7 @@ public class FRCRobot {
 	
 	public void runAutonomous()
 	{
-		//Run the previous task. If previous task ended
+		//Run the current task. If current task ended
 		if(curTask.runTask())
 		{
 			//Go to next state
