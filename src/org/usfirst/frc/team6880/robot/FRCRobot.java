@@ -1,20 +1,20 @@
 package org.usfirst.frc.team6880.robot;
 
 import org.usfirst.frc.team6880.robot.driveTrain.DriveSystem;
+import org.usfirst.frc.team6880.robot.task.*;
 
 public class FRCRobot {
 	Robot wpilibrobot;
-	DriveSystem driveSys;
+	public DriveSystem driveSys;
 	
-	enum Task {MovingForward20m, TurningLeft90deg};
-	Task curTask;
-	Task tasks [] = {Task.MovingForward20m,
-					 Task.TurningLeft90deg,
-					 Task.MovingForward20m,
-					 Task.TurningLeft90deg,
-					 Task.MovingForward20m,
-					 Task.TurningLeft90deg,
-					 Task.MovingForward20m};
+	RobotTask curTask;
+	RobotTask tasks [] = {new TaskMoveForward20m(this),
+						  new TaskTurnLeft90deg(this),
+						  new TaskMoveForward20m(this),
+						  new TaskTurnLeft90deg(this),
+						  new TaskMoveForward20m(this),
+						  new TaskTurnLeft90deg(this),
+						  new TaskMoveForward20m(this)};
 	int taskNum;
 	
 	public FRCRobot(Robot wpilibrobot)
@@ -38,37 +38,15 @@ public class FRCRobot {
 	
 	public void runAutonomous()
 	{
-		switch (curTask)
+		//Run the previous task. If previous task ended
+		if(curTask.runTask())
 		{
-		case MovingForward20m:
-			//TODO: If 20m reached
-			if (true)
-				//TODO: Go to next task
-				changeState();
-			break;
-		case TurningLeft90deg:
-			//TODO: If 90deg reached
-			if (true)
-				//TODO: Go to next task
-				changeState();
+			//Go to next state
+			curTask = tasks[++taskNum];
+			curTask.initTask();
 		}
 	}
-	
-	public void changeState() {
-		//Go to next state
-		curTask = tasks[++taskNum];
-		switch (curTask)
-		{
-		case MovingForward20m:
-			//TODO: Start driving forward
-			//TODO: Get encoder val, set target encoder val
-		break;
-		case TurningLeft90deg:
-			//TODO: Start turning
-			//TODO: Get orientation, set target orientation
-		}
-	}
-	
+		
 	public boolean isEnabled()
 	{
 		return wpilibrobot.isEnabled();
