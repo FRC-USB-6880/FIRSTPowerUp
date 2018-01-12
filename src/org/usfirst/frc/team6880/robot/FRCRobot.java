@@ -1,11 +1,13 @@
 package org.usfirst.frc.team6880.robot;
 
 import org.usfirst.frc.team6880.robot.driveTrain.DriveSystem;
+import org.usfirst.frc.team6880.robot.navigation.Navigation;
 import org.usfirst.frc.team6880.robot.task.*;
 
 public class FRCRobot {
 	Robot wpilibrobot;
 	public DriveSystem driveSys;
+	public Navigation navigation;
 	
 	RobotTask curTask;
 	RobotTask tasks [] = {new TaskMoveForward20m(this),

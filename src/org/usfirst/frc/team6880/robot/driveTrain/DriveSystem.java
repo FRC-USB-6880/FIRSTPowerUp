@@ -19,7 +19,6 @@ public class DriveSystem {
 	Encoder leftEnc;
 	Encoder rightEnc;
 	
-	
 	/**Wheel diameter in meters*/
 	private static final double WHEEL_DIAMETER = 6.0 * 0.0254;
 	/**Wheel circumference in meters*/
@@ -45,6 +44,11 @@ public class DriveSystem {
 	public void tankDrive(double leftSpeed, double rightSpeed)
 	{
 		drive.tankDrive(leftSpeed, rightSpeed);
+	}
+	
+	public void arcadeDrive(double speed, double rotation)
+	{
+		drive.arcadeDrive(speed, rotation);
 	}
 	
 	public double getDist()
