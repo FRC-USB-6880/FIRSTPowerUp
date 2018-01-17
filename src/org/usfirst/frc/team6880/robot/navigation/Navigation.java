@@ -2,18 +2,27 @@ package org.usfirst.frc.team6880.robot.navigation;
 
 import org.usfirst.frc.team6880.robot.FRCRobot;
 
+import frcJsonParser.NavOptionsReader;
+
 public class Navigation {
 	FRCRobot robot;
-	public Gyro gyro;
-	private static final double GYRO_KP = 0.2;
+	public Gyro gyro=null;
+	NavOptionsReader configReader;
+	private static double GYRO_KP;
 	
-	public Navigation(FRCRobot robot) {
+	public Navigation(FRCRobot robot, String navOptStr) {
 		this.robot = robot;
-		this.gyro = new NavxMXP(robot);
+		configReader = new NavOptionsReader("/team6880/navigation_options.json", navOptStr);
+		if(configReader.imuExists())
+			this.gyro = new NavxMXP(robot);
+		GYRO_KP = configReader.getIMUVariableDouble("KP");
 	}
 	
-	public void driveDirection(double speed, double direction)
-	{
-		robot.driveSys.arcadeDrive(speed, GYRO_KP * (gyro.getYaw() - direction));
-	}
+	//TODO Create driveStraightToDistance()
+	
+	
+	//TODO Create turnForDegrees()
+	
+	
+	//TODO Create turnToHeading()
 }

@@ -4,25 +4,35 @@ import org.usfirst.frc.team6880.robot.driveTrain.DriveSystem;
 import org.usfirst.frc.team6880.robot.navigation.Navigation;
 import org.usfirst.frc.team6880.robot.task.*;
 
+import frcJsonParser.RobotConfigReader;
+
 public class FRCRobot {
 	Robot wpilibrobot;
 	public DriveSystem driveSys;
 	public Navigation navigation;
+	RobotConfigReader configReader;
 	
 	RobotTask curTask;
-	RobotTask tasks [] = {new TaskMoveForward20m(this),
-						  new TaskTurnLeft90deg(this),
-						  new TaskMoveForward20m(this),
-						  new TaskTurnLeft90deg(this),
-						  new TaskMoveForward20m(this),
-						  new TaskTurnLeft90deg(this),
-						  new TaskMoveForward20m(this)};
+	RobotTask tasks [] = {new TaskMoveForward(this, 20),
+						  new TaskTurnLeft(this, 90),
+						  new TaskMoveForward(this, 20),
+						  new TaskTurnLeft(this, 90),
+						  new TaskMoveForward(this, 20),
+						  new TaskTurnLeft(this, 90),
+						  new TaskMoveForward(this, 20)};
 	int taskNum;
 	
 	public FRCRobot(Robot wpilibrobot)
 	{
 		this.wpilibrobot = wpilibrobot;
-		driveSys = new DriveSystem(this);
+		configReader = new RobotConfigReader("/robots.json", "2018_Robot"); 
+		driveSys = new DriveSystem(this, configReader.getDriveSysName());
+		
+	}
+	
+	public void initTeleOp()
+	{
+		navigation = new Navigation(this, configReader.getNavigationOption("Teleop"));
 	}
 	
 	public void runTeleOp()
@@ -33,6 +43,7 @@ public class FRCRobot {
 	
 	public void initAutonomous()
 	{
+		navigation = new Navigation(this, configReader.getNavigationOption("Autonomous"));
 		//Start with first task
 		curTask = tasks[0];
 		taskNum = 0;

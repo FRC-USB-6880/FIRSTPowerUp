@@ -2,30 +2,30 @@ package org.usfirst.frc.team6880.robot.task;
 
 import org.usfirst.frc.team6880.robot.FRCRobot;
 
-public class TaskMoveForward20m implements RobotTask {
+public class TaskMoveForward implements RobotTask {
 	FRCRobot robot;
 	double endDist;
 	double direction;
+	double targetDist;
 	
-	public TaskMoveForward20m(FRCRobot robot) {
+	public TaskMoveForward(FRCRobot robot, double targetDist) {
 		this.robot = robot;
+		this.targetDist = targetDist;
 	}
 	
 	public void initTask()
 	{
-		//Set target distance to robot's current distance + 20m
-		endDist = robot.driveSys.getDist() + 20;
-		//Get the direction we want to travel
-		direction = robot.navigation.gyro.getYaw();
+		//Set target distance to robot's current distance + targetDist
+		endDist = robot.driveSys.getEncoderDist() + targetDist;
 	}
 	
 	public boolean runTask()
 	{
-		//If robot hasn't traveled 20m
-		if (robot.driveSys.getDist() < endDist)
+		//If robot hasn't traveled far enough
+		if (robot.driveSys.getEncoderDist() < endDist)
 		{
 			//Go straight at half speed
-			robot.navigation.driveDirection(0.5, direction);
+			robot.driveSys.tankDrive(0.5, 0.5);
 			return false;
 		}
 		//Else stop the robot and tell robot to go to next task
