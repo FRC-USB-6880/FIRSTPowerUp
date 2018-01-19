@@ -23,7 +23,25 @@ public class Navigation {
 	
 	
 	//TODO Create turnForDegrees()
-	
+	public void turnForDegrees(double power, double degrees) //how do I address the degree the robot should turn?
+	{
+		double pos = gyro.getYaw();
+		if (degrees > 0)
+		{
+			while (gyro.getYaw() < (pos + degrees) && robot.isEnabled())
+			{
+				robot.driveSys.tankDrive(power, -power);
+			}
+		}
+		else if (degrees < 0)
+		{
+			while (gyro.getYaw() < (pos + degrees) && robot.isEnabled())
+			{
+				robot.driveSys.tankDrive(power, -power);
+			}
+		}
+		robot.driveSys.tankDrive(0, 0);
+	}
 	
 	//TODO Create turnToHeading()
 }
