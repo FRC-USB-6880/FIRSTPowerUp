@@ -1,13 +1,12 @@
 package org.usfirst.frc.team6880.robot.driveTrain;
 
 import org.usfirst.frc.team6880.robot.FRCRobot;
+import org.usfirst.frc.team6880.robot.jsonReaders.*;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frcJsonParser.DriveSysReader;
-import frcJsonParser.WheelSpecsReader;
 
 public class DriveSystem {
 	FRCRobot robot;
@@ -20,7 +19,7 @@ public class DriveSystem {
 	DifferentialDrive drive;
 	Encoder leftEnc;
 	Encoder rightEnc;
-	DriveSysReader configReader;
+	DriveTrainReader configReader;
 	WheelSpecsReader wheelSpecsReader;
 	
 	private static double WHEEL_DIAMETER;
@@ -30,13 +29,13 @@ public class DriveSystem {
 	public DriveSystem(FRCRobot robot, String driveSysName)
 	{
 		this.robot = robot;
-		configReader = new DriveSysReader("/team6880/drivesystems.json", driveSysName);
+		configReader = new DriveTrainReader("/team6880/drivesystems.json", driveSysName);
 		String wheelType = configReader.getWheelType();
 		wheelSpecsReader = new WheelSpecsReader("/team6880/wheelspecs.json", wheelType);
 		
 		WHEEL_DIAMETER = wheelSpecsReader.getDiameter();
 		WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-		DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE / configReader.getCountsPerRotation();
+		DISTANCE_PER_PULSE = WHEEL_CIRCUMFERENCE / configReader.getEncoderValue("leftEncoder", "PPR");
 		
 		motorL1 = new VictorSP(0);
 		motorL2 = new VictorSP(1);

@@ -1,10 +1,10 @@
 package org.usfirst.frc.team6880.robot;
 
 import org.usfirst.frc.team6880.robot.driveTrain.DriveSystem;
+import org.usfirst.frc.team6880.robot.jsonReaders.*;
 import org.usfirst.frc.team6880.robot.navigation.Navigation;
 import org.usfirst.frc.team6880.robot.task.*;
 
-import frcJsonParser.RobotConfigReader;
 
 public class FRCRobot {
 	Robot wpilibrobot;
@@ -26,7 +26,7 @@ public class FRCRobot {
 	{
 		this.wpilibrobot = wpilibrobot;
 		configReader = new RobotConfigReader("/robots.json", "2018_Robot"); 
-		driveSys = new DriveSystem(this, configReader.getDriveSysName());
+		driveSys = new DriveSystem(this, configReader.getDriveTrainName());
 		
 	}
 	

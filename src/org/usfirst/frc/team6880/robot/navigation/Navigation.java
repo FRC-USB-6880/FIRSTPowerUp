@@ -1,8 +1,9 @@
 package org.usfirst.frc.team6880.robot.navigation;
 
 import org.usfirst.frc.team6880.robot.FRCRobot;
+import org.usfirst.frc.team6880.robot.jsonReaders.*;
 
-import frcJsonParser.NavOptionsReader;
+
 
 public class Navigation {
 	FRCRobot robot;
